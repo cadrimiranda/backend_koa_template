@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "tsc --init",
-    "dev": "nodemon index.ts",
+    "dev": "nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.0.0",
     "koa2-cors": "^2.0.6",
+    "mongodb": "^3.6.10",
     "mongoose": "^5.13.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
@@ -29,6 +30,7 @@
     "@types/koa-bodyparser": "^4.3.2",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.3",
+    "@types/mongoose": "^5.11.97",
     "nodemon": "^2.0.9"
   }
 }

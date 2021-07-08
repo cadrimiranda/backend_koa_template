@@ -3,6 +3,7 @@ import bodyParser from "koa-bodyparser";
 import cors from "koa2-cors";
 import logger from "koa-logger";
 import createRoutes from "./routes";
+import MongoDB from "./db";
 
 const app = new Koa();
 
@@ -18,4 +19,6 @@ createRoutes(app);
 
 app.listen(6030, function () {
   console.log("Server running on https://localhost:6030");
+
+  MongoDB.getInstance().connect();
 });
