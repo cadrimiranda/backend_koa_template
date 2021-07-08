@@ -20,6 +20,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.0.0",
     "koa2-cors": "^2.0.6",
+    "mongoose": "^5.13.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
