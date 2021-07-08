@@ -32,6 +32,13 @@
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.3",
     "@types/mongoose": "^5.11.97",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "nodemon": "^2.0.9"
   }
 }
