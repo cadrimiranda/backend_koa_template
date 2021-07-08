@@ -19,8 +19,10 @@ app.use(
 app.use(logger());
 createRoutes(app);
 
-app.listen(6030, function () {
-  console.log("Server running on https://localhost:6030");
+app.listen(5910, function () {
+  console.log("Server running on https://localhost:6040");
 
-  MongoDB.getInstance().connect();
+  MongoDB.getInstance()
+    .connect()
+    .catch((e) => console.log({ error: e }));
 });

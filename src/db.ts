@@ -5,13 +5,24 @@ class MongoDB {
 
   public connect() {
     return new Promise((accept, reject) => {
-      mongoose
-        .connect("mongodb://localhost:27017/web-app")
-        .then((...props) => {
-          console.log("mongo connected");
-          accept(...props);
-        })
-        .catch(reject);
+      const url = process.env.MONGO_URL_DB;
+      console.log({ url });
+      if (!url) {
+        console.error("ERROR: Não foi encontrado a url mongoDB");
+        reject("ERROR: Não foi encontrado a url mongoDB");
+      } else {
+        mongoose
+          .connect(url as string, {
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useUnifiedTopology: true,
+          })
+          .then((...props) => {
+            console.log("mongo connected");
+            accept(...props);
+          })
+          .catch(reject);
+      }
     });
   }
 }
