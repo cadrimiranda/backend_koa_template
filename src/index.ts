@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import Koa, { Context } from "koa";
 import bodyParser from "koa-bodyparser";
 import cors from "koa2-cors";
