@@ -4,6 +4,7 @@
         "es2021": true
     },
     "extends": [
+        "prettier",
         "standard"
     ],
     "parser": "@typescript-eslint/parser",
@@ -12,8 +13,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules": {
+        "prettier/prettier": "error"
     }
 }
