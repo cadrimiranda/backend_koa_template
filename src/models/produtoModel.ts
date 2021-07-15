@@ -1,6 +1,9 @@
-import Mongoose from "mongoose";
-import produtoSchema from "../schemas/produtoSchema";
+import DB from "../db";
+import produtoSchema, { ProdutoSchema } from "../schemas/produtoSchema";
 
-const ProdutoModel = Mongoose.model("Produto", produtoSchema);
+const ProdutoModel = DB.getInstance().createModel<ProdutoSchema>(
+  "Produto",
+  produtoSchema
+);
 
 export default ProdutoModel;

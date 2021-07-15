@@ -1,6 +1,10 @@
 import { Schema } from "mongoose";
 
-const produtoSchema = new Schema({
+export interface ProdutoSchema extends Document {
+  nome: string;
+}
+
+const produtoSchema = new Schema<ProdutoSchema>({
   nome: String,
 });
 
