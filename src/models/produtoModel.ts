@@ -1,9 +1,8 @@
-import DB from "../db";
-import produtoSchema, { ProdutoSchema } from "../schemas/produtoSchema";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import produtoSchema from "../schemas/produtoSchema";
+import BaseModel from "./baseModel";
 
-const ProdutoModel = DB.getInstance().createModel<ProdutoSchema>(
-  "Produto",
-  produtoSchema
-);
+// @ts-ignore
+const ProdutoModel = new BaseModel("Produto", produtoSchema);
 
 export default ProdutoModel;
