@@ -35,6 +35,7 @@ class BaseModel {
     this.getOneById = this.getOneById.bind(this);
     this.editOneById = this.editOneById.bind(this);
     this.deleteOneById = this.deleteOneById.bind(this);
+    this.deleteManyById = this.deleteManyById.bind(this);
   }
 
   private createGenericError(errors: any) {
@@ -79,7 +80,6 @@ class BaseModel {
     ) => void
   ) {
     const _model = this._model;
-    console.log({ data });
     const { id, ...rest } = data;
     await _model
       .updateOne({ _id: id }, rest)
@@ -123,14 +123,29 @@ class BaseModel {
       .catch((err) => callback(null, this.createGenericError(err.message)));
   }
 
+  public async deleteManyById(
+    ids: string[],
+    callback: (
+      result: { ok: boolean; count: number } | null,
+      err: errorReturn
+    ) => void
+  ) {
+    await this._model
+      .deleteMany({ _id: { $in: ids } })
+      .then((res) => callback({ ok: true, count: res.deletedCount || 0 }, null))
+      .catch((err) => callback(null, this.createGenericError(err.message)));
+  }
+
   public async getAll(
     data: any,
     callback: (docs: Document[] | null, err: errorObject | null) => void
   ) {
-    await this._model
+    return await this._model
       .find(data as FilterQuery<any>)
       .then((docs) => callback(docs, null))
-      .catch((err) => callback(null, this.createGenericError(err.message)));
+      .catch((err) => {
+        return callback(null, this.createGenericError(err.message));
+      });
   }
 }
 
