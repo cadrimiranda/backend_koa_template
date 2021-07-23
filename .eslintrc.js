@@ -16,6 +16,7 @@ module.exports = {
     plugins: ['prettier', '@typescript-eslint'],
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off'
     },
   };
   
