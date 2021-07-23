@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import produtoSchema from "../schemas/produtoSchema";
 import BaseModel from "../utils/baseModel";
 
