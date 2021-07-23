@@ -1,15 +1,9 @@
 import Router from "koa-router";
+import ProdutoController from "../controller/produtoController";
+import KoaUtils from "../utils/koaUtils";
 const router = new Router();
 
-router.get(`/ping`, async (ctx) => {
-  try {
-    ctx.body = {
-      status: "success",
-      data: "pong",
-    };
-  } catch (err) {
-    console.error(err);
-  }
-});
+const controller = new ProdutoController();
+KoaUtils.CreateBaseRoutes(router, controller);
 
 export default router;
