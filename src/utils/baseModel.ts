@@ -23,12 +23,32 @@ type EditOneByIdProps = {
   [key: string]: any;
 };
 
+interface IDefault {
+  shouldPopulate?: boolean;
+}
+
+interface IGetOneById extends IDefault {
+  id: string;
+  callback: (doc: Document | null, err: errorObject | null) => void;
+}
+
+interface IGetAll extends IDefault {
+  data: any;
+  callback: (docs: Document[] | null, err: errorObject | null) => void;
+}
+
 class BaseModel {
   _model: ModelType = {} as ModelType;
+  _relations: string[] = [];
 
-  constructor(name: string, schema: Schema) {
+  constructor(
+    name: string,
+    schema: Schema<any>,
+    modelRelations: string[] = []
+  ) {
     const model = DB.getInstance().createModel(name, schema);
     this._model = model;
+    this._relations = modelRelations;
 
     this.getAll = this.getAll.bind(this);
     this.saveOne = this.saveOne.bind(this);
@@ -45,13 +65,9 @@ class BaseModel {
     };
   }
 
-  public async getOneById(
-    id: string,
-    callback: (doc: Document | null, err: errorObject | null) => void,
-    { populateRelations = [] }: { populateRelations: string[] } = {
-      populateRelations: [],
-    }
-  ) {
+  public async getOneById({ id, shouldPopulate, callback }: IGetOneById) {
+    const populateRelations = shouldPopulate ? this._relations : [];
+
     await this._model
       .findById(id)
       .populate(populateRelations.map((path) => ({ path })))
@@ -136,12 +152,11 @@ class BaseModel {
       .catch((err) => callback(null, this.createGenericError(err.message)));
   }
 
-  public async getAll(
-    data: any,
-    callback: (docs: Document[] | null, err: errorObject | null) => void
-  ) {
+  public async getAll({ data, shouldPopulate, callback }: IGetAll) {
+    const populateRelations = shouldPopulate ? this._relations : [];
     return await this._model
-      .find(data as FilterQuery<any>)
+      .find(data)
+      .populate(populateRelations.map((path) => ({ path })))
       .then((docs) => callback(docs, null))
       .catch((err) => {
         return callback(null, this.createGenericError(err.message));

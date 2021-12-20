@@ -129,20 +129,24 @@ abstract class BaseController {
       });
     }
 
-    await this.model.getOneById(params.id, (produto, err) => {
-      if (produto) {
-        return raiseHttp({ status: 200, body: produto });
-      } else if (err) {
-        return raiseHttp({
-          status: 400,
-          body: err.message,
-        });
-      } else {
-        return raiseHttp({
-          status: 400,
-          body: `Item with id ${params.id} was not found`,
-        });
-      }
+    await this.model.getOneById({
+      id: params.id,
+      shouldPopulate: params.relations,
+      callback: (produto, err) => {
+        if (produto) {
+          return raiseHttp({ status: 200, body: produto });
+        } else if (err) {
+          return raiseHttp({
+            status: 400,
+            body: err.message,
+          });
+        } else {
+          return raiseHttp({
+            status: 400,
+            body: `Item with id ${params.id} was not found`,
+          });
+        }
+      },
     });
   }
 
@@ -156,15 +160,21 @@ abstract class BaseController {
       });
     }
 
-    await this.model.getAll(body, (docs, err) => {
-      if (docs) {
-        return raiseHttp({ status: 200, body: docs });
-      }
+    const { relations, ...restBody } = body;
 
-      return raiseHttp({
-        status: 400,
-        body: err?.message,
-      });
+    await this.model.getAll({
+      data: restBody,
+      shouldPopulate: relations,
+      callback: (docs, err) => {
+        if (docs) {
+          return raiseHttp({ status: 200, body: docs });
+        }
+
+        return raiseHttp({
+          status: 400,
+          body: err?.message,
+        });
+      },
     });
   }
 
@@ -193,19 +203,22 @@ abstract class BaseController {
   public async listCheckbox(props: RouteProps): Promise<any> {
     const { raiseHttp, body } = props;
 
-    await this.model.getAll(body, (docs, err) => {
-      if (docs) {
-        return raiseHttp({
-          status: 200,
-          // @ts-ignore
-          body: docs.map((x) => ({ value: x._id, label: x.nome })),
-        });
-      }
+    await this.model.getAll({
+      data: body,
+      callback: (docs, err) => {
+        if (docs) {
+          return raiseHttp({
+            status: 200,
+            // @ts-ignore
+            body: docs.map((x) => ({ value: x._id, label: x.nome })),
+          });
+        }
 
-      return raiseHttp({
-        status: 400,
-        body: err?.message,
-      });
+        return raiseHttp({
+          status: 400,
+          body: err?.message,
+        });
+      },
     });
   }
 }

@@ -1,7 +1,8 @@
 import produtoSchema from "../schemas/produtoSchema";
 import BaseModel from "../utils/baseModel";
 
-// @ts-ignore
-const ProdutoModel = new BaseModel("Produto", produtoSchema);
+export const produtoModelName = "Produto";
+
+const ProdutoModel = new BaseModel(produtoModelName, produtoSchema);
 
 export default ProdutoModel;
